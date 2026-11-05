@@ -1,0 +1,12 @@
+{
+  "source_notebook": "cifar10_animal_classification_sid_version.ipynb",
+  "source_notebook_sha256": "a42b9e051562c865b163bd5428d4e59bc458888470b28670fee8bb012301d061",
+  "mode": "g35_luma_only",
+  "candidates": [
+    "g35_luma"
+  ],
+  "base_level": "run1_original",
+  "tensorflow_version": "2.21.0",
+  "python_version": "3.13.5 (tags/v3.13.5:6cb20a2, Jun 11 2025, 16:15:46) [MSC v.1943 64 bit (AMD64)]",
+  "saved_at": "2026-11-05 01:30:48"
+}
