@@ -6,6 +6,7 @@ from PIL import Image
 from pathlib import Path
 import keras
 
+from normal_conflict import add_normal_conflict_tab
 from shortcut_experiments import add_experiment_tab
 
 CLASS_NAMES = ["bird", "cat", "deer", "dog", "frog", "horse"]
@@ -57,6 +58,7 @@ with gr.Blocks() as demo:
         button.click(fn=predict_animal, inputs=image, outputs=result)
 
     add_experiment_tab(preprocess_image, CLASS_NAMES)
+    add_normal_conflict_tab(preprocess_image, CLASS_NAMES)
 
 
 if __name__ == "__main__":

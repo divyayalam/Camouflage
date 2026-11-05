@@ -21,3 +21,11 @@ experiment_runs/
 ```
 
 Each run folder also contains its matching `*_results.json`. The model weights are ignored by Git within this folder. They are loaded the first time a run is selected.
+
+## Normal versus conflict
+
+Choose a training run, upload two versions of the same image, then select **Compare pair**. Keep the animal and image content fixed; change the cue in the conflict version. Enter the true animal class if known. Each panel reports its predicted class and confidence scores. The summary reports whether the prediction changed, and the score difference (conflict minus normal) for the true class or the normal prediction when the true class is unknown.
+
+The results table records comparisons for the current browser session. **Clear session results** empties the table; it does not change the saved accuracy table in Shortcut Experiments.
+
+To check the interface before the team provides official pairs, use one animal image and its red/blue-swapped version from the Shortcut Experiments tab. Treat this as a color-robustness demonstration.
