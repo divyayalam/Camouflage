@@ -59,3 +59,35 @@ Supported pairs follow Jay's notebook: class patch versus neutral gray, class pa
 The notebook's class patch is 4 by 4 pixels in the top-left corner: bird red, cat green, deer blue, dog yellow, frog magenta, horse cyan. The cue is applied to 95% of the shortcut models' training/validation images. The notebook reports that Original and Heavy patch-trained models exist in its Drive execution environment; those weights are separate files from the notebook and the JSON.
 
 Graphs require Matplotlib in the same Python environment as the dashboard.
+
+## Week 6: model comparison and channel ablation
+
+The **Model Comparison** tab compares the saved `run1_original` checkpoint with your locally trained `g35_luma` checkpoint. The original reference is the same run evaluated in the grayscale notebook, rather than the separate `animal_cnn_final.keras` used by the first Prediction tab.
+
+The grayscale model uses the same CNN architecture, trained afresh with 35% of training examples converted to luma grayscale. This targets color dependence. It is not evidence of mitigation of the planted corner-patch shortcut. The local notebook trained only `g35_luma`, not Sid's full eleven-variant search.
+
+Upload an animal image, choose **Color** or **Grayscale (luma)**, select a model to inspect, and optionally supply the true animal class. Click **Compare models**. Both models always receive the same normalized 32 × 32 RGB input. The grayscale option uses the notebook's luma weights `[0.2989, 0.5870, 0.1140]` and repeats the result across three channels. Both predictions, all class scores, and correctness (when the true class is supplied) appear side by side. The confidence difference uses the true class, or the original model's predicted class when the true class is unknown. It is mitigated minus original, in percentage points; one image does not establish improved accuracy.
+
+The recorded table and chart come from `test_summary.csv`: 6,000 held-out animal images per view. They do not change with uploads. Your local run reports color accuracy 83.33% → 81.97%, luma-grayscale accuracy 77.58% → 80.35%, and average-grayscale accuracy 77.13% → 80.33%. The color–luma gap decreases from 5.75 to 1.62 percentage points. These are observed results from one training run, without uncertainty estimates.
+
+Expand **Optional: turn off internal feature channels**, enable ablation, and enter channel IDs such as `0, 1, 2`. This masks those channels after the final convolution block's BatchNormalization, before pooling. The channels are 128 learned feature maps, not the three input color channels. Only the selected model is masked; the main two-model comparison remains unmasked. The separate ablation results compare that model with its own unmasked prediction. Empty IDs provide a no-change check. Channel IDs are zero-based, from 0 to 127. The dashboard never retrains, edits weights, or saves the mask. Changes show sensitivity to the selected channels; no channel ranking or shortcut identity is inferred.
+
+Keep these matching files together beside the dashboard:
+
+```text
+channel_ablation.py
+model_comparison.py
+experiment_runs/grayscale_local/g35_luma_only/
+  best.json
+  test_summary.csv
+  validation_summary.csv
+  local_run_provenance.json
+  g35_luma/g35_luma_model.keras
+  g35_luma/g35_luma_results.json
+```
+
+The original `experiment_runs/run1_original` assets are also required. The grayscale checkpoint is about 10 MB. Although `experiment_runs/.gitignore` ignores new `.keras` files, include this particular checkpoint explicitly when publishing so teammates can run the comparison. Retain `best.json` and the matching metrics from the same local run. Start the dashboard with the existing virtual environment's Python and `app.py`; no new packages are required.
+
+Test at least three animal images in both color and grayscale views. Check both model selectors, a known and unknown true class, ablation off, empty IDs, a few valid IDs, and an out-of-range ID. With empty IDs, scores should match the selected model's normal prediction. Turning ablation off must restore the normal scores.
+
+Week 5's imported patch-removal results still require Jay's separate `track1_results.json`; the Week 6 grayscale report does not replace that export.

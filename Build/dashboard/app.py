@@ -7,6 +7,7 @@ from pathlib import Path
 import keras
 
 from normal_conflict import add_normal_conflict_tab
+from model_comparison import add_model_comparison_tab
 from shortcut_removal import add_removal_tab
 from shortcut_experiments import add_experiment_tab
 
@@ -61,6 +62,7 @@ with gr.Blocks() as demo:
     add_experiment_tab(preprocess_image, CLASS_NAMES)
     add_normal_conflict_tab(preprocess_image, CLASS_NAMES)
     add_removal_tab(preprocess_image, CLASS_NAMES)
+    add_model_comparison_tab(preprocess_image, CLASS_NAMES)
 
 
 if __name__ == "__main__":

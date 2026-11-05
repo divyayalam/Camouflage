@@ -1,0 +1,26 @@
+{
+  "variant": "g35_luma",
+  "selected_on": "val_mean",
+  "base_level": "run1_original",
+  "settings": {
+    "gray_p": 0.35,
+    "method": "luma",
+    "mix_jitter": 0.0,
+    "partial": [
+      1.0,
+      1.0
+    ],
+    "gray_contrast": 0.0,
+    "gray_gamma": 0.0
+  },
+  "local_mode": "g35_luma_only",
+  "candidates": [
+    "g35_luma"
+  ],
+  "val_color": 0.8349999785423279,
+  "val_gray": 0.8119444251060486,
+  "val_mean": 0.8234722018241882,
+  "epochs_trained": 22.0,
+  "minutes": 10.9,
+  "saved_at": "2026-11-05 01:30:23"
+}
