@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "analyzedImages": 1,
+  "consoleErrors": [],
+  "httpFailures": [],
+  "downloads": [
+    {
+      "file": "downloaded-image-report.json",
+      "nativeSave": false,
+      "endpointVerified": true
+    },
+    {
+      "file": "downloaded-recorded-results.csv",
+      "nativeSave": false,
+      "endpointVerified": true
+    }
+  ],
+  "checks": [
+    "analysis",
+    "SRS",
+    "Grad-CAM gallery",
+    "channel mask",
+    "both pair types",
+    "clear history",
+    "model comparison",
+    "recorded results",
+    "report and CSV download endpoints",
+    "narrow layout",
+    "controls recover after invalid input"
+  ]
+}

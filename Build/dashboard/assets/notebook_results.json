@@ -1,0 +1,681 @@
+{
+  "source_notebook": "cifar10_animal_classification-3.ipynb",
+  "source_sha256": "2301f8103a5e7e282454768e6430b9671210db8d8ee4d98997bce9c0bc587076",
+  "github_commit": "3ab4add74d68a34cc07cde1c454fa674cf07b0e1",
+  "source": "Saved execution outputs supplied by Jay; no experiments rerun during extraction",
+  "n_test": 6000,
+  "n_srs": 1200,
+  "n_gradcam": 300,
+  "n_paired": 200,
+  "models": [
+    {
+      "model": "Original (run1, no aug)",
+      "acc_clean": 84.02,
+      "srs_colour": 25.4,
+      "srs_patch": 1.0,
+      "acc_gray": 77.52,
+      "acc_bgr": 72.47,
+      "acc_aligned": 83.97,
+      "acc_neutral": 83.9,
+      "acc_conflicting": 82.85,
+      "worst_color": 72.47,
+      "worst_patch": 82.85
+    },
+    {
+      "model": "Mild aug (run2)",
+      "acc_clean": 82.3,
+      "srs_colour": 24.4,
+      "srs_patch": 0.9
+    },
+    {
+      "model": "Stronger aug (run3)",
+      "acc_clean": 82.0,
+      "srs_colour": 9.2,
+      "srs_patch": 0.8
+    },
+    {
+      "model": "Heavy aug (run4)",
+      "acc_clean": 76.95,
+      "srs_colour": 2.1,
+      "srs_patch": 0.7,
+      "acc_gray": 76.78,
+      "acc_bgr": 76.78,
+      "acc_aligned": 76.58,
+      "acc_neutral": 76.8,
+      "acc_conflicting": 76.6,
+      "worst_color": 76.78,
+      "worst_patch": 76.58
+    },
+    {
+      "model": "Patch-shortcut model",
+      "acc_clean": 67.08,
+      "srs_colour": 34.4,
+      "srs_patch": 100.0,
+      "acc_gray": 62.83,
+      "acc_bgr": 55.62,
+      "acc_aligned": 100.0,
+      "acc_neutral": 67.03,
+      "acc_conflicting": 0.25,
+      "worst_color": 55.62,
+      "worst_patch": 0.25
+    },
+    {
+      "model": "Grayscale aug (g35_tone)",
+      "acc_clean": 82.37,
+      "srs_colour": 14.6,
+      "srs_patch": 0.8,
+      "acc_gray": 80.37,
+      "acc_bgr": 76.4,
+      "acc_aligned": 81.85,
+      "acc_neutral": 82.27,
+      "acc_conflicting": 82.18,
+      "worst_color": 76.4,
+      "worst_patch": 81.85
+    },
+    {
+      "model": "Consistency (gray view, λ=0)",
+      "acc_clean": 80.25,
+      "srs_colour": 13.3,
+      "srs_patch": 0.5,
+      "acc_gray": 79.38,
+      "acc_bgr": 78.33,
+      "acc_aligned": 79.53,
+      "acc_neutral": 79.75,
+      "acc_conflicting": 79.15,
+      "worst_color": 78.33,
+      "worst_patch": 79.15
+    },
+    {
+      "model": "Consistency (gray view, λ=12)",
+      "acc_clean": 82.25,
+      "srs_colour": 3.1,
+      "srs_patch": 0.6,
+      "acc_gray": 82.23,
+      "acc_bgr": 81.98,
+      "acc_aligned": 82.0,
+      "acc_neutral": 81.98,
+      "acc_conflicting": 81.85,
+      "worst_color": 81.98,
+      "worst_patch": 81.85
+    },
+    {
+      "model": "Consistency (mixed-colour view, λ=0)",
+      "acc_clean": 79.7,
+      "srs_colour": 3.4,
+      "srs_patch": 0.7,
+      "acc_gray": 79.22,
+      "acc_bgr": 79.25,
+      "acc_aligned": 79.42,
+      "acc_neutral": 79.3,
+      "acc_conflicting": 79.08,
+      "worst_color": 79.22,
+      "worst_patch": 79.08
+    },
+    {
+      "model": "Consistency (mixed-colour view, λ=12)",
+      "acc_clean": 82.65,
+      "srs_colour": 1.2,
+      "srs_patch": 0.4,
+      "acc_gray": 82.82,
+      "acc_bgr": 82.65,
+      "acc_aligned": 82.05,
+      "acc_neutral": 82.28,
+      "acc_conflicting": 82.02,
+      "worst_color": 82.65,
+      "worst_patch": 82.02
+    },
+    {
+      "model": "Consistency (grey-patch view, λ=0)",
+      "acc_clean": 82.38,
+      "srs_colour": 29.0,
+      "srs_patch": 99.2,
+      "acc_gray": 76.48,
+      "acc_bgr": 69.85,
+      "acc_aligned": 99.98,
+      "acc_neutral": 82.37,
+      "acc_conflicting": 0.83,
+      "worst_color": 69.85,
+      "worst_patch": 0.83
+    },
+    {
+      "model": "Consistency (grey-patch view, λ=12)",
+      "acc_clean": 83.68,
+      "srs_colour": 25.5,
+      "srs_patch": 5.4,
+      "acc_gray": 77.87,
+      "acc_bgr": 70.22,
+      "acc_aligned": 90.95,
+      "acc_neutral": 83.78,
+      "acc_conflicting": 81.13,
+      "worst_color": 70.22,
+      "worst_patch": 81.13
+    }
+  ],
+  "paired": [
+    {
+      "model": "run1_original|baseline",
+      "pair": "patch_vs_neutral",
+      "mean_drop_pp": -0.0,
+      "std_drop_pp": 8.1,
+      "flips": "9/200",
+      "accuracy_with": 86.5,
+      "accuracy_without": 87.5
+    },
+    {
+      "model": "run1_original|shortcut",
+      "pair": "patch_vs_neutral",
+      "mean_drop_pp": 41.8,
+      "std_drop_pp": 30.9,
+      "flips": "60/200",
+      "accuracy_with": 100.0,
+      "accuracy_without": 70.0
+    },
+    {
+      "model": "run2_mild|baseline",
+      "pair": "patch_vs_neutral",
+      "mean_drop_pp": -0.0,
+      "std_drop_pp": 5.6000000000000005,
+      "flips": "7/200",
+      "accuracy_with": 87.0,
+      "accuracy_without": 85.5
+    },
+    {
+      "model": "run3_stronger|baseline",
+      "pair": "patch_vs_neutral",
+      "mean_drop_pp": -0.4,
+      "std_drop_pp": 4.0,
+      "flips": "7/200",
+      "accuracy_with": 82.0,
+      "accuracy_without": 84.0
+    },
+    {
+      "model": "run4_heavy|baseline",
+      "pair": "patch_vs_neutral",
+      "mean_drop_pp": -0.2,
+      "std_drop_pp": 2.1,
+      "flips": "7/200",
+      "accuracy_with": 78.5,
+      "accuracy_without": 79.5
+    },
+    {
+      "model": "run4_heavy|shortcut",
+      "pair": "patch_vs_neutral",
+      "mean_drop_pp": 56.00000000000001,
+      "std_drop_pp": 29.4,
+      "flips": "85/200",
+      "accuracy_with": 100.0,
+      "accuracy_without": 57.49999999999999
+    },
+    {
+      "model": "g35_tone|grayscale",
+      "pair": "patch_vs_neutral",
+      "mean_drop_pp": -0.2,
+      "std_drop_pp": 3.4000000000000004,
+      "flips": "4/200",
+      "accuracy_with": 89.5,
+      "accuracy_without": 88.5
+    },
+    {
+      "model": "col_gray_l0|consistency",
+      "pair": "patch_vs_neutral",
+      "mean_drop_pp": -0.2,
+      "std_drop_pp": 2.8000000000000003,
+      "flips": "2/200",
+      "accuracy_with": 82.0,
+      "accuracy_without": 81.0
+    },
+    {
+      "model": "col_gray_l12|consistency",
+      "pair": "patch_vs_neutral",
+      "mean_drop_pp": -0.0,
+      "std_drop_pp": 2.4,
+      "flips": "3/200",
+      "accuracy_with": 82.5,
+      "accuracy_without": 83.0
+    },
+    {
+      "model": "col_mixed_l0|consistency",
+      "pair": "patch_vs_neutral",
+      "mean_drop_pp": 0.4,
+      "std_drop_pp": 2.8000000000000003,
+      "flips": "5/200",
+      "accuracy_with": 85.0,
+      "accuracy_without": 83.0
+    },
+    {
+      "model": "col_mixed_l12|consistency",
+      "pair": "patch_vs_neutral",
+      "mean_drop_pp": 0.0,
+      "std_drop_pp": 2.1,
+      "flips": "1/200",
+      "accuracy_with": 83.0,
+      "accuracy_without": 82.5
+    },
+    {
+      "model": "patch_l0|consistency",
+      "pair": "patch_vs_neutral",
+      "mean_drop_pp": 19.8,
+      "std_drop_pp": 29.599999999999998,
+      "flips": "31/200",
+      "accuracy_with": 100.0,
+      "accuracy_without": 84.5
+    },
+    {
+      "model": "patch_l12|consistency",
+      "pair": "patch_vs_neutral",
+      "mean_drop_pp": 6.1,
+      "std_drop_pp": 8.3,
+      "flips": "13/200",
+      "accuracy_with": 93.5,
+      "accuracy_without": 87.0
+    },
+    {
+      "model": "run1_original|baseline",
+      "pair": "patch_vs_removed",
+      "mean_drop_pp": -0.0,
+      "std_drop_pp": 9.700000000000001,
+      "flips": "11/200",
+      "accuracy_with": 86.5,
+      "accuracy_without": 87.5
+    },
+    {
+      "model": "run1_original|shortcut",
+      "pair": "patch_vs_removed",
+      "mean_drop_pp": 41.5,
+      "std_drop_pp": 30.9,
+      "flips": "60/200",
+      "accuracy_with": 100.0,
+      "accuracy_without": 70.0
+    },
+    {
+      "model": "run2_mild|baseline",
+      "pair": "patch_vs_removed",
+      "mean_drop_pp": 0.4,
+      "std_drop_pp": 7.000000000000001,
+      "flips": "6/200",
+      "accuracy_with": 87.0,
+      "accuracy_without": 86.0
+    },
+    {
+      "model": "run3_stronger|baseline",
+      "pair": "patch_vs_removed",
+      "mean_drop_pp": -0.5,
+      "std_drop_pp": 5.1,
+      "flips": "7/200",
+      "accuracy_with": 82.0,
+      "accuracy_without": 83.5
+    },
+    {
+      "model": "run4_heavy|baseline",
+      "pair": "patch_vs_removed",
+      "mean_drop_pp": -0.6,
+      "std_drop_pp": 4.2,
+      "flips": "8/200",
+      "accuracy_with": 78.5,
+      "accuracy_without": 79.5
+    },
+    {
+      "model": "run4_heavy|shortcut",
+      "pair": "patch_vs_removed",
+      "mean_drop_pp": 55.60000000000001,
+      "std_drop_pp": 29.5,
+      "flips": "85/200",
+      "accuracy_with": 100.0,
+      "accuracy_without": 57.49999999999999
+    },
+    {
+      "model": "g35_tone|grayscale",
+      "pair": "patch_vs_removed",
+      "mean_drop_pp": 0.1,
+      "std_drop_pp": 5.3,
+      "flips": "5/200",
+      "accuracy_with": 89.5,
+      "accuracy_without": 89.0
+    },
+    {
+      "model": "col_gray_l0|consistency",
+      "pair": "patch_vs_removed",
+      "mean_drop_pp": -0.2,
+      "std_drop_pp": 3.8,
+      "flips": "4/200",
+      "accuracy_with": 82.0,
+      "accuracy_without": 81.5
+    },
+    {
+      "model": "col_gray_l12|consistency",
+      "pair": "patch_vs_removed",
+      "mean_drop_pp": -0.4,
+      "std_drop_pp": 3.0,
+      "flips": "4/200",
+      "accuracy_with": 82.5,
+      "accuracy_without": 83.5
+    },
+    {
+      "model": "col_mixed_l0|consistency",
+      "pair": "patch_vs_removed",
+      "mean_drop_pp": 0.1,
+      "std_drop_pp": 4.6,
+      "flips": "7/200",
+      "accuracy_with": 85.0,
+      "accuracy_without": 83.5
+    },
+    {
+      "model": "col_mixed_l12|consistency",
+      "pair": "patch_vs_removed",
+      "mean_drop_pp": -0.2,
+      "std_drop_pp": 3.1,
+      "flips": "2/200",
+      "accuracy_with": 83.0,
+      "accuracy_without": 83.0
+    },
+    {
+      "model": "patch_l0|consistency",
+      "pair": "patch_vs_removed",
+      "mean_drop_pp": 19.6,
+      "std_drop_pp": 29.4,
+      "flips": "31/200",
+      "accuracy_with": 100.0,
+      "accuracy_without": 84.5
+    },
+    {
+      "model": "patch_l12|consistency",
+      "pair": "patch_vs_removed",
+      "mean_drop_pp": 6.1,
+      "std_drop_pp": 8.6,
+      "flips": "15/200",
+      "accuracy_with": 93.5,
+      "accuracy_without": 86.0
+    },
+    {
+      "model": "run1_original|baseline",
+      "pair": "color_vs_grayscale",
+      "mean_drop_pp": 7.5,
+      "std_drop_pp": 23.9,
+      "flips": "28/200",
+      "accuracy_with": 87.5,
+      "accuracy_without": 80.5
+    },
+    {
+      "model": "run1_original|shortcut",
+      "pair": "color_vs_grayscale",
+      "mean_drop_pp": 6.6000000000000005,
+      "std_drop_pp": 16.0,
+      "flips": "43/200",
+      "accuracy_with": 70.0,
+      "accuracy_without": 64.0
+    },
+    {
+      "model": "run2_mild|baseline",
+      "pair": "color_vs_grayscale",
+      "mean_drop_pp": 10.0,
+      "std_drop_pp": 23.400000000000002,
+      "flips": "35/200",
+      "accuracy_with": 86.0,
+      "accuracy_without": 76.0
+    },
+    {
+      "model": "run3_stronger|baseline",
+      "pair": "color_vs_grayscale",
+      "mean_drop_pp": 2.5,
+      "std_drop_pp": 10.299999999999999,
+      "flips": "14/200",
+      "accuracy_with": 83.5,
+      "accuracy_without": 80.5
+    },
+    {
+      "model": "run4_heavy|baseline",
+      "pair": "color_vs_grayscale",
+      "mean_drop_pp": -0.4,
+      "std_drop_pp": 3.5000000000000004,
+      "flips": "4/200",
+      "accuracy_with": 79.5,
+      "accuracy_without": 80.0
+    },
+    {
+      "model": "run4_heavy|shortcut",
+      "pair": "color_vs_grayscale",
+      "mean_drop_pp": 0.7000000000000001,
+      "std_drop_pp": 3.8,
+      "flips": "11/200",
+      "accuracy_with": 57.49999999999999,
+      "accuracy_without": 58.5
+    },
+    {
+      "model": "g35_tone|grayscale",
+      "pair": "color_vs_grayscale",
+      "mean_drop_pp": 2.0,
+      "std_drop_pp": 9.3,
+      "flips": "13/200",
+      "accuracy_with": 89.0,
+      "accuracy_without": 85.0
+    },
+    {
+      "model": "col_gray_l0|consistency",
+      "pair": "color_vs_grayscale",
+      "mean_drop_pp": 0.7000000000000001,
+      "std_drop_pp": 9.700000000000001,
+      "flips": "12/200",
+      "accuracy_with": 81.5,
+      "accuracy_without": 78.5
+    },
+    {
+      "model": "col_gray_l12|consistency",
+      "pair": "color_vs_grayscale",
+      "mean_drop_pp": 0.2,
+      "std_drop_pp": 1.4000000000000001,
+      "flips": "5/200",
+      "accuracy_with": 83.5,
+      "accuracy_without": 83.5
+    },
+    {
+      "model": "col_mixed_l0|consistency",
+      "pair": "color_vs_grayscale",
+      "mean_drop_pp": 0.5,
+      "std_drop_pp": 4.8,
+      "flips": "8/200",
+      "accuracy_with": 83.5,
+      "accuracy_without": 82.0
+    },
+    {
+      "model": "col_mixed_l12|consistency",
+      "pair": "color_vs_grayscale",
+      "mean_drop_pp": -0.1,
+      "std_drop_pp": 3.3000000000000003,
+      "flips": "3/200",
+      "accuracy_with": 83.0,
+      "accuracy_without": 84.0
+    },
+    {
+      "model": "patch_l0|consistency",
+      "pair": "color_vs_grayscale",
+      "mean_drop_pp": 8.6,
+      "std_drop_pp": 23.3,
+      "flips": "38/200",
+      "accuracy_with": 84.5,
+      "accuracy_without": 77.5
+    },
+    {
+      "model": "patch_l12|consistency",
+      "pair": "color_vs_grayscale",
+      "mean_drop_pp": 8.7,
+      "std_drop_pp": 21.5,
+      "flips": "33/200",
+      "accuracy_with": 86.0,
+      "accuracy_without": 79.5
+    },
+    {
+      "model": "run1_original|baseline",
+      "pair": "color_vs_bgr",
+      "mean_drop_pp": 14.499999999999998,
+      "std_drop_pp": 28.599999999999998,
+      "flips": "42/200",
+      "accuracy_with": 87.5,
+      "accuracy_without": 72.5
+    },
+    {
+      "model": "run1_original|shortcut",
+      "pair": "color_vs_bgr",
+      "mean_drop_pp": 12.9,
+      "std_drop_pp": 25.0,
+      "flips": "62/200",
+      "accuracy_with": 70.0,
+      "accuracy_without": 57.99999999999999
+    },
+    {
+      "model": "run2_mild|baseline",
+      "pair": "color_vs_bgr",
+      "mean_drop_pp": 18.7,
+      "std_drop_pp": 30.8,
+      "flips": "59/200",
+      "accuracy_with": 86.0,
+      "accuracy_without": 67.5
+    },
+    {
+      "model": "run3_stronger|baseline",
+      "pair": "color_vs_bgr",
+      "mean_drop_pp": 3.3000000000000003,
+      "std_drop_pp": 13.100000000000001,
+      "flips": "20/200",
+      "accuracy_with": 83.5,
+      "accuracy_without": 79.0
+    },
+    {
+      "model": "run4_heavy|baseline",
+      "pair": "color_vs_bgr",
+      "mean_drop_pp": 0.0,
+      "std_drop_pp": 2.7,
+      "flips": "3/200",
+      "accuracy_with": 79.5,
+      "accuracy_without": 80.5
+    },
+    {
+      "model": "run4_heavy|shortcut",
+      "pair": "color_vs_bgr",
+      "mean_drop_pp": 0.8999999999999999,
+      "std_drop_pp": 3.9,
+      "flips": "20/200",
+      "accuracy_with": 57.49999999999999,
+      "accuracy_without": 56.99999999999999
+    },
+    {
+      "model": "g35_tone|grayscale",
+      "pair": "color_vs_bgr",
+      "mean_drop_pp": 7.5,
+      "std_drop_pp": 19.8,
+      "flips": "21/200",
+      "accuracy_with": 89.0,
+      "accuracy_without": 81.0
+    },
+    {
+      "model": "col_gray_l0|consistency",
+      "pair": "color_vs_bgr",
+      "mean_drop_pp": 3.0,
+      "std_drop_pp": 11.4,
+      "flips": "19/200",
+      "accuracy_with": 81.5,
+      "accuracy_without": 78.5
+    },
+    {
+      "model": "col_gray_l12|consistency",
+      "pair": "color_vs_bgr",
+      "mean_drop_pp": 0.5,
+      "std_drop_pp": 3.6999999999999997,
+      "flips": "9/200",
+      "accuracy_with": 83.5,
+      "accuracy_without": 83.0
+    },
+    {
+      "model": "col_mixed_l0|consistency",
+      "pair": "color_vs_bgr",
+      "mean_drop_pp": 0.6,
+      "std_drop_pp": 3.8,
+      "flips": "4/200",
+      "accuracy_with": 83.5,
+      "accuracy_without": 82.0
+    },
+    {
+      "model": "col_mixed_l12|consistency",
+      "pair": "color_vs_bgr",
+      "mean_drop_pp": 0.2,
+      "std_drop_pp": 1.5,
+      "flips": "1/200",
+      "accuracy_with": 83.0,
+      "accuracy_without": 83.5
+    },
+    {
+      "model": "patch_l0|consistency",
+      "pair": "color_vs_bgr",
+      "mean_drop_pp": 14.899999999999999,
+      "std_drop_pp": 28.7,
+      "flips": "52/200",
+      "accuracy_with": 84.5,
+      "accuracy_without": 72.0
+    },
+    {
+      "model": "patch_l12|consistency",
+      "pair": "color_vs_bgr",
+      "mean_drop_pp": 17.8,
+      "std_drop_pp": 28.000000000000004,
+      "flips": "49/200",
+      "accuracy_with": 86.0,
+      "accuracy_without": 69.5
+    }
+  ],
+  "figures": [
+    {
+      "key": "accuracy",
+      "title": "Accuracy across test conditions",
+      "file": "accuracy.png",
+      "source_cell": 57
+    },
+    {
+      "key": "srs",
+      "title": "Shortcut Reliance Scores",
+      "file": "srs.png",
+      "source_cell": 58
+    },
+    {
+      "key": "augmentation",
+      "title": "Augmentation and color robustness",
+      "file": "augmentation.png",
+      "source_cell": 59
+    },
+    {
+      "key": "mitigation",
+      "title": "Mitigation and controls",
+      "file": "mitigation.png",
+      "source_cell": 60
+    },
+    {
+      "key": "gradcam_patch",
+      "title": "Grad-CAM · misleading corner patches",
+      "file": "gradcam_patch.png",
+      "source_cell": 61
+    },
+    {
+      "key": "gradcam_color",
+      "title": "Grad-CAM · color changes",
+      "file": "gradcam_color.png",
+      "source_cell": 62
+    },
+    {
+      "key": "attention",
+      "title": "Attention at the patch corner",
+      "file": "attention.png",
+      "source_cell": 63
+    },
+    {
+      "key": "confidence",
+      "title": "Confidence shifts",
+      "file": "confidence.png",
+      "source_cell": 64
+    }
+  ],
+  "srs_precision": "SRS means are preserved at their saved console precision (one decimal). Accuracy tables retain saved two-decimal precision where available.",
+  "winners": {
+    "color": "col_mixed_l12",
+    "patch": "patch_l12"
+  },
+  "github_blob_sha": "c4d343a0b29786e455fb90209f196404f3d2dab9",
+  "supplied_notebook_matches_github_blob": true
+}
