@@ -1,0 +1,13 @@
+model,acc_clean,srs_colour,srs_patch
+"Original (run1, no aug)",84.02,25.4,1.0
+Mild aug (run2),82.3,24.4,0.9
+Stronger aug (run3),82.0,9.2,0.8
+Heavy aug (run4),76.95,2.1,0.7
+Patch-shortcut model,67.08,34.4,100.0
+Grayscale aug (g35_tone),82.37,14.6,0.8
+"Consistency (gray view, λ=0)",80.25,13.3,0.5
+"Consistency (gray view, λ=12)",82.25,3.1,0.6
+"Consistency (mixed-colour view, λ=0)",79.7,3.4,0.7
+"Consistency (mixed-colour view, λ=12)",82.65,1.2,0.4
+"Consistency (grey-patch view, λ=0)",82.38,29.0,99.2
+"Consistency (grey-patch view, λ=12)",83.68,25.5,5.4

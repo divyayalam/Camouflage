@@ -1,69 +1,9 @@
-import gradio as gr
-import numpy as np
-from PIL import Image
+"""Launch CAMouflage in the project's existing Python environment."""
+from analysis_core import CLASSES as CLASS_NAMES, preprocess_image
+from dashboard_ui import CSS, THEME
+from final_dashboard import create_dashboard
 
-#Loading the model
-from pathlib import Path
-import keras
+demo=create_dashboard()
 
-from normal_conflict import add_normal_conflict_tab
-from model_comparison import add_model_comparison_tab
-from shortcut_removal import add_removal_tab
-from shortcut_experiments import add_experiment_tab
-
-CLASS_NAMES = ["bird", "cat", "deer", "dog", "frog", "horse"]
-
-MODEL_PATH = Path(__file__).resolve().parent / "animal_cnn_final.keras"
-model = keras.models.load_model(MODEL_PATH, compile=False)
-
-def preprocess_image(image):
-
-    #Ensuring the image is in RGB format
-    image = image.convert("RGB")
-
-    #Resizing the image to 32x32 pixels
-    image = image.resize((32, 32), Image.Resampling.BILINEAR)
-
-    #Converting the pixels to numericals and normalizing the image
-    image_array = np.asarray(image, dtype=np.float32) / 255.0
-
-    #Creating a batch containing one image
-    batch = np.expand_dims(image_array, axis=0)
-
-    return batch
-
-def predict_animal(image):
-    if image is None:
-        raise gr.Error("Upload an image first.")
-
-    batch = preprocess_image(image)
-    probabilities = model(batch, training=False).numpy()[0]
-
-    return {
-        name: float(probabilities[i])
-        for i, name in enumerate(CLASS_NAMES)
-    }
-
-#Updated Gradio layout
-with gr.Blocks() as demo:
-    gr.Markdown(
-        "# CAMouflage\n"
-        "Upload an image to classify it into one of six animal categories."
-    )
-
-    with gr.Tab("Prediction", id="prediction"):
-        with gr.Row():
-            image = gr.Image(type="pil", label="Upload an image")
-            result = gr.Label(num_top_classes=6, label="Prediction")
-
-        button = gr.Button("Predict")
-        button.click(fn=predict_animal, inputs=image, outputs=result)
-
-    add_experiment_tab(preprocess_image, CLASS_NAMES)
-    add_normal_conflict_tab(preprocess_image, CLASS_NAMES)
-    add_removal_tab(preprocess_image, CLASS_NAMES)
-    add_model_comparison_tab(preprocess_image, CLASS_NAMES)
-
-
-if __name__ == "__main__":
-    demo.launch()
+if __name__=='__main__':
+    demo.launch(theme=THEME,css=CSS,ssr_mode=False,footer_links=[])

@@ -1,0 +1,143 @@
+{
+  "status": "passed",
+  "images": [
+    {
+      "image": "bird_test_00025.png",
+      "model": "run1_original",
+      "prediction": "bird",
+      "color_srs": 66.66666666666666,
+      "patch_srs": 0.0
+    },
+    {
+      "image": "bird_test_00035.png",
+      "model": "run2_mild",
+      "prediction": "cat",
+      "color_srs": 0.0,
+      "patch_srs": 0.0
+    },
+    {
+      "image": "bird_test_00065.png",
+      "model": "run3_stronger",
+      "prediction": "bird",
+      "color_srs": 0.0,
+      "patch_srs": 0.0
+    },
+    {
+      "image": "cat_test_00000.png",
+      "model": "run4_heavy",
+      "prediction": "frog",
+      "color_srs": 0.0,
+      "patch_srs": 0.0
+    },
+    {
+      "image": "cat_test_00008.png",
+      "model": "g35_luma",
+      "prediction": "cat",
+      "color_srs": 0.0,
+      "patch_srs": 0.0
+    },
+    {
+      "image": "cat_test_00046.png",
+      "model": "run1_original",
+      "prediction": "dog",
+      "color_srs": 100.0,
+      "patch_srs": 0.0
+    },
+    {
+      "image": "deer_test_00022.png",
+      "model": "run2_mild",
+      "prediction": "deer",
+      "color_srs": 0.0,
+      "patch_srs": 0.0
+    },
+    {
+      "image": "deer_test_00026.png",
+      "model": "run3_stronger",
+      "prediction": "deer",
+      "color_srs": 100.0,
+      "patch_srs": 0.0
+    },
+    {
+      "image": "deer_test_00032.png",
+      "model": "run4_heavy",
+      "prediction": "deer",
+      "color_srs": 0.0,
+      "patch_srs": 20.0
+    },
+    {
+      "image": "dog_test_00012.png",
+      "model": "g35_luma",
+      "prediction": "dog",
+      "color_srs": 0.0,
+      "patch_srs": 0.0
+    },
+    {
+      "image": "dog_test_00016.png",
+      "model": "run1_original",
+      "prediction": "dog",
+      "color_srs": 0.0,
+      "patch_srs": 0.0
+    },
+    {
+      "image": "dog_test_00024.png",
+      "model": "run2_mild",
+      "prediction": "deer",
+      "color_srs": 33.33333333333333,
+      "patch_srs": 0.0
+    },
+    {
+      "image": "frog_test_00004.png",
+      "model": "run3_stronger",
+      "prediction": "frog",
+      "color_srs": 0.0,
+      "patch_srs": 0.0
+    },
+    {
+      "image": "frog_test_00005.png",
+      "model": "run4_heavy",
+      "prediction": "frog",
+      "color_srs": 0.0,
+      "patch_srs": 0.0
+    },
+    {
+      "image": "frog_test_00007.png",
+      "model": "g35_luma",
+      "prediction": "frog",
+      "color_srs": 33.33333333333333,
+      "patch_srs": 0.0
+    },
+    {
+      "image": "horse_test_00013.png",
+      "model": "run1_original",
+      "prediction": "horse",
+      "color_srs": 0.0,
+      "patch_srs": 0.0
+    },
+    {
+      "image": "horse_test_00017.png",
+      "model": "run2_mild",
+      "prediction": "horse",
+      "color_srs": 33.33333333333333,
+      "patch_srs": 0.0
+    },
+    {
+      "image": "horse_test_00020.png",
+      "model": "run3_stronger",
+      "prediction": "dog",
+      "color_srs": 0.0,
+      "patch_srs": 0.0
+    }
+  ],
+  "unique_images": 18,
+  "formula_source": "Jay final notebook cells 48 and 49",
+  "models": [
+    "run1_original",
+    "run2_mild",
+    "run3_stronger",
+    "run4_heavy",
+    "g35_luma"
+  ],
+  "weights_unchanged": true,
+  "recorded_models": 12,
+  "recorded_paired_summaries": 52
+}

@@ -4,6 +4,7 @@ from pathlib import Path
 import gradio as gr
 from matplotlib.figure import Figure
 import numpy as np
+from dashboard_ui import INFERENCE_UI
 
 
 CLASS_NAMES = ["bird", "cat", "deer", "dog", "frog", "horse"]
@@ -19,6 +20,10 @@ IMAGE_HEADERS = ["Image index", "True class", "Prediction with", "Prediction wit
 
 def model_name(name):
     level, _, kind = name.partition("|")
+    if kind == "consistency":
+        return f"Consistency ({level})"
+    if kind == "grayscale":
+        return f"Grayscale augmentation ({level})"
     level_name = {"run1_original": "Original", "run2_mild": "Mild", "run3_stronger": "Stronger", "run4_heavy": "Heavy"}.get(level, level)
     return f'{level_name} ({"patch-trained" if kind == "shortcut" else "baseline"})'
 
@@ -154,8 +159,8 @@ def load_and_show_track1(path):
 
 def add_track1_results_panel():
     gr.Markdown(
-        "### Recorded confidence experiment\n"
-        "Load Jay's exported track1_results.json. These results follow the true animal class. "
+        "### Open a confidence experiment\n"
+        "Choose a saved track1_results.json report. These results follow the true animal class. "
         "A positive drop means its confidence fell without the shortcut."
     )
     file = gr.File(label="Track 1 results JSON", file_types=[".json"], type="filepath")
@@ -180,6 +185,7 @@ def add_track1_results_panel():
     load.click(
         fn=load_and_show_track1, inputs=file, outputs=[data, model, pair, *outputs],
         api_name="load_track1_results", concurrency_id="track1-results",
+        show_progress_on=[summary], **INFERENCE_UI,
     )
 
     def select_model(payload, selected):

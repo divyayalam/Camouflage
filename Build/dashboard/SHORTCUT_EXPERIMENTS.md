@@ -1,3 +1,5 @@
+> Historical Weeks 3–7 notes. The final dashboard and metric definitions are documented in [README_DASHBOARD.md](README_DASHBOARD.md). Jay’s final notebook now defines SRS; earlier pending-status notes below describe the previous version.
+
 # Shortcut Experiments
 
 Start the app in the same Python environment used for the baseline:
@@ -91,3 +93,27 @@ The original `experiment_runs/run1_original` assets are also required. The grays
 Test at least three animal images in both color and grayscale views. Check both model selectors, a known and unknown true class, ablation off, empty IDs, a few valid IDs, and an out-of-range ID. With empty IDs, scores should match the selected model's normal prediction. Turning ablation off must restore the normal scores.
 
 Week 5's imported patch-removal results still require Jay's separate `track1_results.json`; the Week 6 grayscale report does not replace that export.
+
+## Week 7: UI polish and final integration
+
+The dashboard now uses consistent spacing, image sizes, action labels, and a local-font theme. Tabs wrap instead of hiding the final views in an overflow menu. Uploading a new image in Prediction clears the previous prediction. Model actions show a loading indicator and accept one submission at a time. The queue is bounded to 12 requests. The Python-rendered frontend is used directly to avoid a separate Node/SSR startup dependency.
+
+The **Prediction** checkpoint loads on first use instead of blocking the whole dashboard at startup. Grayscale and transparency inputs are converted to RGB, and EXIF orientation is applied before resizing. Missing or malformed augmentation-result archives show unavailable cells rather than preventing the app from opening. Missing checkpoints and grayscale metadata produce actionable messages.
+
+### Grad-CAM
+
+In **Grad-CAM**, upload an animal image, choose one of the four augmentation baselines or `g35_luma`, choose **Predicted class** or a fixed animal class, and click **Generate Grad-CAM**. The app displays its actual 32 × 32 input, an overlay, the colorized heatmap, all class scores, and the target class. Overlay strength changes only the visualization; click Generate again to apply it.
+
+The implementation integrates the method now present in [Track 2's notebook](https://github.com/divyayalam/Camouflage/blob/452e445/track2_predictionAnalysis.ipynb) and follows the [official Keras Grad-CAM example](https://keras.io/examples/vision/grad_cam/). It uses gradients of the selected class's pre-softmax score with respect to the last Conv2D output, averages gradients spatially, weights the feature maps, takes positive contributions, and normalizes for display. The final Dense logits are computed from its existing weights without modifying its softmax activation. All layers run in inference mode. Zero-positive-evidence maps are handled without division by zero and are identified in the summary.
+
+Heatmaps are class-specific, low-resolution relative-evidence visualizations. Bright regions do not establish precise object boundaries, causal dependence, or shortcut identity. Keep the target class fixed when comparing models or image interventions. These live explanations are generated from the selected installed checkpoint; they are not imported Track 2 cohort results.
+
+### Final results status
+
+**Final Results** gathers the recorded mitigation table/chart and reports the status of Grad-CAM, SRS, and the separate patch-removal export. The locally trained grayscale mitigation is ready. Live Grad-CAM is ready. A finalized **Shortcut Reliance Score formula/export has not been supplied**, so SRS is explicitly pending. Existing true-class confidence-drop values are not relabeled as SRS. Jay's actual `track1_results.json` also remains a separate outstanding experiment export.
+
+### Test checklist
+
+Use at least 10 distinct images spanning all six animals. Check Prediction, both Model Comparison views, Grad-CAM for predicted and fixed classes, optional channel ablation, normal/conflict comparison, shortcut removal, and both session-clear actions. Confirm that clearing removal history retains the current pair's graph, as before. Recorded tables should stay fixed across uploads.
+
+Check empty uploads, an out-of-range channel ID, grayscale and RGBA images, missing result archives, and a narrow browser viewport. Valid actions should complete without browser errors. Expected validation messages for incomplete inputs are not integration failures. The Week 7 validation report records the actual checks and any remaining gaps. Do not claim the full final-metrics requirement is complete until the team's SRS definition/export has been integrated.
