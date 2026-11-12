@@ -1,40 +1,257 @@
-# Camouflage
+# CAMouflage
 
-CAMouflage is a research style tool for detecting and diagnosing "shortcut learning" in image classifiers - cases where a model achieves high accuracy by relying on spurious cues (background color, a watermark, a colored patch) instead of the actual object it's supposed to recognize.
+CAMouflage is a computer vision project that investigates shortcut learning in image classification models. The goal is to determine whether a CNN is learning the intended object features or relying on contextual shortcuts such as background, color, texture, or other visual cues.
 
-Train a small CNN on a dataset with a deliberately injected shortcut, then use Grad-CAM and feature/channel ablation to visualize and quantify how much the model depends on that shortcut vs. the real signal. Everything is explorable live through an interactive dashboard: pick an image, see where the model is looking, ablate suspect features, and watch the prediction change in real time.
+The project uses a six-class subset of CIFAR-10:
 
-## Overview
+- Bird
+- Cat
+- Deer
+- Dog
+- Frog
+- Horse
 
-Image classifiers can learn to exploit spurious correlations in training data rather than the features we actually care about. 
-A model trained on images where, say, cats are usually photographed on red backgrounds may learn "red → cat" instead of "cat → cat."
+## Project Goals
 
-CAMouflage makes this failure mode visible and measurable by:
+The project focuses on:
 
-1. Training a CNN on a dataset with a controlled, injected shortcut.
-2. Evaluating it on both normal and **shortcut-conflict** data (the shortcut and label deliberately mismatched) to expose hidden reliance.
-3. Using **Grad-CAM** to visualize where the model is actually looking.
-4. Quantifying reliance with a custom **Shortcut Reliance Score (SRS)**.
-5. **Ablating** suspect neurons/channels and observing the effect on predictions live.
-6. *(Stretch)* Training a shortcut-mitigated model and comparing it against the original.
+- Training and evaluating a baseline CNN
+- Investigating prediction failures
+- Measuring model robustness across shortcut strengths
+- Testing background and color dependence
+- Using Grad-CAM to visualize model attention
+- Measuring shortcut reliance
+- Identifying shortcut-sensitive CNN channels
+- Performing feature/channel ablation
+- Comparing predictions before and after ablation
 
-## Tech Stack
+## Environment
 
-**Modeling**
-- [PyTorch](https://pytorch.org/) — model definition & training
-- [TorchVision](https://pytorch.org/vision/stable/index.html) — datasets, transforms, pretrained backbones
+The project is primarily developed using Google Colab.
 
-**Interpretability**
-- Grad-CAM (custom / [pytorch-grad-cam](https://github.com/jacobgil/pytorch-grad-cam))
-- Custom forward-hook–based ablation utilities
+Main libraries:
 
-**Analysis & Visualization**
+- Python
+- TensorFlow / Keras
 - NumPy
+- Pandas
 - Matplotlib
+- scikit-learn
 
-**Interface**
-- [Gradio](https://www.gradio.app/) for the interactive dashboard (React frontend possible as a stretch goal)
+## Setup
 
-**Infra**
-- Google Colab for training/experimentation
-- Local machine / GPU recommended if pursuing the live webcam stretch goal
+Clone the repository:
+
+```bash
+git clone https://github.com/divyayalam/Camouflage.git
+cd Camouflage
+```
+
+Install the required Python libraries:
+
+```bash
+pip install tensorflow numpy pandas matplotlib scikit-learn
+```
+
+Google Colab can also be used to run the Track 2 notebook.
+
+## Track 2 Notebook
+
+The main Track 2 analysis notebook is:
+
+```text
+track2_predictionAnalysis.ipynb
+```
+
+The notebook contains the model explainability, robustness, shortcut-reliance, Grad-CAM, and feature-ablation experiments.
+
+## Baseline Prediction Analysis
+
+The baseline model was evaluated on six CIFAR-10 animal classes.
+
+Track 2 investigated:
+
+- Correct predictions
+- Incorrect predictions
+- Prediction confidence
+- Confusion matrices
+- Precision
+- Recall
+- F1 score
+
+The failure analysis showed that the model could make high-confidence mistakes and appeared sensitive to background, texture, and color information.
+
+## Shortcut Strength Experiments
+
+Models were compared across multiple test conditions:
+
+- Original
+- Mild
+- Stronger
+- Heavy
+
+The original model performed best on clean images but degraded significantly as distortion strength increased.
+
+Models trained with stronger augmentation were more robust under stronger test conditions.
+
+## Color Intervention Experiments
+
+The baseline model achieved:
+
+- Original accuracy: 71.10%
+- Grayscale accuracy: 61.22%
+- Color-shuffle accuracy: 55.92%
+
+The accuracy decrease suggests that color information contributes significantly to the model's predictions.
+
+## Object and Background Experiments
+
+A center-region proxy mask was used to approximate the object region.
+
+Results:
+
+- Original accuracy: 71.10%
+- Object-only accuracy: 39.48%
+- Background-only accuracy: 44.83%
+- Object-only retention: 0.555
+
+The relatively high background-only accuracy and low object-only retention suggest that the CNN uses contextual background information in addition to the intended object.
+
+## Background-Swap Experiment
+
+The background of each image was replaced with background information from an image belonging to another class.
+
+Results:
+
+- Original accuracy: 71.10%
+- Background-swap accuracy: 28.02%
+- Conflict drop: 43.08 percentage points
+
+The large conflict drop provides evidence that background information strongly affects the model's predictions.
+
+## Grad-CAM Analysis
+
+Grad-CAM was used to visualize which regions contributed to CNN predictions.
+
+For one analyzed example:
+
+- Original background attention: 67.27%
+- Background-swap attention: 71.30%
+
+The increased attention after the background swap is consistent with the model relying on contextual information.
+
+## Shortcut Reliance Score
+
+The project uses a simple Shortcut Reliance Score to summarize multiple indicators of shortcut dependence.
+
+The score combines:
+
+1. Conflict drop
+2. Background-only accuracy
+3. Loss of object-only retention
+
+Formula:
+
+```text
+SRS =
+(
+    Conflict Drop
+    + Background-Only Accuracy
+    + (1 - Object-Only Retention)
+) / 3
+```
+
+Higher values indicate stronger evidence of reliance on non-object features.
+
+This is a project-defined metric rather than a standardized machine-learning metric.
+
+## Feature / Channel Ablation
+
+Activation analysis was used to identify channels that changed strongly between normal and background-swapped images.
+
+The final candidate channels were:
+
+```text
+109, 62, 105, 63, 31
+```
+
+These channels were ablated by setting their activations to zero before the classifier layers.
+
+### Ablation Results
+
+On a targeted shortcut-sensitive sample:
+
+| Condition | Before Ablation | After Ablation |
+|---|---:|---:|
+| Normal accuracy | 100% | 96% |
+| Background-swap accuracy | 0% | 6% |
+| Normal true-class confidence | 76.86% | 76.38% |
+| Background-swap true-class confidence | 10.79% | 12.27% |
+
+Six background-swap predictions recovered to the correct class after ablation.
+
+Examples included:
+
+- horse → dog
+- frog → cat
+- horse → cat
+- horse → bird
+
+The 100% normal and 0% background-swap starting accuracies are by construction because this evaluation subset contains images that were correct normally and incorrect after the background swap.
+
+## Interpretation
+
+The experiments provide evidence that the baseline CNN relies on shortcut-related contextual information.
+
+Background modifications caused major accuracy decreases, and Grad-CAM showed substantial attention outside the approximate object region.
+
+Channel ablation produced a partial improvement on shortcut-dependent examples while preserving most normal-image performance.
+
+The limited recovery rate suggests that shortcut reliance is distributed across multiple learned features rather than being controlled by only a few channels.
+
+## Limitations
+
+- CIFAR-10 images are low resolution.
+- The object/background experiments use a center-region proxy rather than true segmentation masks.
+- Grad-CAM should not be interpreted as a complete explanation of model reasoning.
+- Channel ablation only recovered a small percentage of shortcut-dependent examples.
+- The Shortcut Reliance Score is a project-defined summary metric.
+- Results from the targeted ablation sample should not be interpreted as overall model accuracy.
+
+## Documentation
+
+Additional methodology and ablation analysis can be found in:
+
+```text
+docs/track2_ablation_analysis.md
+```
+
+## Repository Structure
+
+```text
+Camouflage/
+├── README.md
+├── docs/
+│   └── track2_ablation_analysis.md
+├── track2_predictionAnalysis.ipynb
+└── .gitignore
+```
+
+## Track 2 Summary
+
+Track 2 investigated how the CNN makes predictions and whether those predictions depend on shortcut features.
+
+The completed analysis includes:
+
+- baseline prediction investigation
+- evaluation metrics
+- shortcut-strength comparison
+- color interventions
+- object/background testing
+- background-conflict testing
+- Grad-CAM
+- Shortcut Reliance Score
+- feature/channel ablation
+- final ablation verification
+
+These results can now be integrated into the final dashboard and project demonstration.
